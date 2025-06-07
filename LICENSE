@@ -1,0 +1,112 @@
+DTRIQ LLC PROPRIETARY SOFTWARE LICENSE
+
+Copyright (c) 2025 DTRIQ LLC. All rights reserved.
+
+SBIR Award Data Scraper
+Version 1.0
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. DEFINITIONS
+
+"Software" means the SBIR Award Data Scraper software, including all source code, 
+documentation, configuration files, and associated materials provided in this repository.
+
+"DTRIQ LLC" means DTRIQ LLC, a limited liability company.
+
+"You" (or "Your") means an individual or legal entity exercising permissions 
+granted by this License.
+
+2. GRANT OF LICENSE
+
+Subject to the terms and conditions of this License, DTRIQ LLC hereby grants You 
+a limited, non-exclusive, non-transferable license to:
+
+a) Use the Software for personal, academic, or internal business purposes
+b) Modify the Software for Your own use
+c) Distribute copies of the Software provided that:
+   - This license notice is included with all copies
+   - No commercial use is made without written permission from DTRIQ LLC
+   - Proper attribution to DTRIQ LLC is maintained
+
+3. RESTRICTIONS
+
+You may NOT:
+
+a) Remove or alter any copyright notices, trademarks, or other proprietary markings
+b) Use the Software for commercial purposes without written permission from DTRIQ LLC
+c) Sell, rent, lease, or sublicense the Software
+d) Reverse engineer, decompile, or disassemble the Software except as permitted by law
+e) Use DTRIQ LLC's name, trademarks, or logos without written permission
+
+4. INTELLECTUAL PROPERTY
+
+DTRIQ LLC retains all right, title, and interest in and to the Software, including 
+all intellectual property rights. This License does not grant You any rights to 
+DTRIQ LLC's trademarks, service marks, or logos.
+
+5. DATA AND PRIVACY
+
+The Software accesses public data from SBIR.gov APIs. Users are responsible for:
+
+a) Complying with all applicable data protection and privacy laws
+b) Respecting the SBIR.gov terms of service and API usage policies
+c) Ensuring responsible use of the collected data
+d) Not using the data for any unlawful purposes
+
+6. NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+DTRIQ LLC BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN 
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+7. LIMITATION OF LIABILITY
+
+IN NO EVENT SHALL DTRIQ LLC BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, 
+OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES 
+FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS 
+INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR 
+INABILITY TO USE THE SOFTWARE.
+
+8. TERMINATION
+
+This License is effective until terminated. Your rights under this License will 
+terminate automatically without notice if You fail to comply with any term(s) 
+of this License. Upon termination, You must cease all use of the Software and 
+destroy all copies.
+
+9. COMMERCIAL LICENSING
+
+For commercial use, enterprise licensing, or custom development services, 
+please contact DTRIQ LLC for a separate commercial license agreement.
+
+10. GOVERNING LAW
+
+This License shall be governed by and construed in accordance with the laws 
+of the jurisdiction where DTRIQ LLC is incorporated, without regard to its 
+conflict of law provisions.
+
+11. ENTIRE AGREEMENT
+
+This License constitutes the entire agreement between You and DTRIQ LLC 
+regarding the Software and supersedes all prior communications, agreements, 
+or understandings, whether written or oral.
+
+CONTACT INFORMATION
+
+For licensing inquiries, commercial use permissions, or other questions:
+
+Art Dietrich
+DTRIQ LLC
+Email: art.dietrich@dtriq.com
+Website: https://www.dtriq.com
+
+---
+
+By using this Software, You acknowledge that You have read this License, 
+understand it, and agree to be bound by its terms and conditions.
+
+Last Updated: June 7, 2025
