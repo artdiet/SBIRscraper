@@ -76,6 +76,7 @@ config/secrets.py
 
 # Internal planning documents
 ScraperPRD.md
+CLAUDE.md
 
 # Test outputs
 .pytest_cache/
