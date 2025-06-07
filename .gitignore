@@ -74,6 +74,9 @@ Thumbs.db
 config/local_config.py
 config/secrets.py
 
+# Internal planning documents
+ScraperPRD.md
+
 # Test outputs
 .pytest_cache/
 .coverage
