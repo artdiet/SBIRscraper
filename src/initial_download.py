@@ -13,6 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 import signal
+from tqdm import tqdm
 
 # Add parent directory to path for config import
 sys.path.append(str(Path(__file__).parent.parent))
@@ -35,6 +36,7 @@ class SBIRInitialDownloader:
         self.total_downloaded = 0
         self.start_time = None
         self.interrupted = False
+        self.progress_bar = None
         
         # Setup logging
         self.setup_logging()
@@ -59,6 +61,8 @@ class SBIRInitialDownloader:
         """Handle interrupt signals gracefully"""
         self.logger.info(f"Received signal {signum}, initiating graceful shutdown...")
         self.interrupted = True
+        if self.progress_bar:
+            self.progress_bar.close()
     
     def fetch_batch(self, start_offset: int, batch_size: int = BATCH_SIZE) -> Optional[List[Dict[str, Any]]]:
         """Fetch a batch of awards from the API"""
@@ -142,6 +146,16 @@ class SBIRInitialDownloader:
                         self.logger.info(f"Resuming download from offset {start_offset}")
                         self.total_downloaded = existing_count
                 
+                # Initialize progress bar
+                self.progress_bar = tqdm(
+                    total=ESTIMATED_TOTAL_RECORDS,
+                    initial=self.total_downloaded,
+                    desc="Downloading SBIR awards",
+                    unit="records",
+                    unit_scale=True,
+                    bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]"
+                )
+                
                 # Download in batches
                 offset = start_offset
                 consecutive_empty_batches = 0
@@ -179,15 +193,23 @@ class SBIRInitialDownloader:
                         self.total_downloaded += inserted
                         offset += len(awards)
                         
-                        # Progress reporting
-                        if offset % (PROGRESS_UPDATE_INTERVAL * BATCH_SIZE) == 0:
+                        # Update progress bar
+                        self.progress_bar.update(inserted)
+                        self.progress_bar.set_postfix({
+                            'Batch': f"{len(valid_awards)}", 
+                            'Total': f"{self.total_downloaded:,}",
+                            'Rate': f"{self.total_downloaded/(time.time()-self.start_time.timestamp()):.1f}/s" if self.start_time else "0/s"
+                        })
+                        
+                        # Progress reporting (less frequent with progress bar)
+                        if offset % (PROGRESS_UPDATE_INTERVAL * BATCH_SIZE * 5) == 0:
                             self.log_progress(offset)
                         
                         # Checkpoint
                         if offset % (CHECKPOINT_INTERVAL * BATCH_SIZE) == 0:
                             db.set_metadata("last_download_offset", str(offset))
                             db.set_metadata("last_download_time", datetime.now().isoformat())
-                            self.logger.info(f"Checkpoint saved at offset {offset}")
+                            self.progress_bar.write(f"Checkpoint saved at offset {offset:,}")
                         
                         # Rate limiting
                         time.sleep(API_DELAY)
@@ -195,6 +217,10 @@ class SBIRInitialDownloader:
                     except Exception as e:
                         self.logger.error(f"Database error at offset {offset}: {e}")
                         return False
+                
+                # Close progress bar
+                if self.progress_bar:
+                    self.progress_bar.close()
                 
                 # Save final metadata
                 db.set_metadata("initial_download_completed", datetime.now().isoformat())

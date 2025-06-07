@@ -12,6 +12,7 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Set
+from tqdm import tqdm
 
 # Add parent directory to path for config import
 sys.path.append(str(Path(__file__).parent.parent))
@@ -98,6 +99,9 @@ class SBIRUpdateChecker:
         all_recent_awards = []
         offset = 0
         
+        # Progress bar for update checking
+        pbar = tqdm(desc="Checking for updates", unit="records", unit_scale=True)
+        
         # Calculate date threshold
         threshold_date = datetime.now() - timedelta(days=days_back)
         threshold_str = threshold_date.strftime("%Y-%m-%d")
@@ -140,33 +144,40 @@ class SBIRUpdateChecker:
                 
                 all_recent_awards.extend(recent_awards)
                 
+                # Update progress bar
+                pbar.update(len(awards))
+                pbar.set_postfix({
+                    'Recent': len(all_recent_awards),
+                    'Searched': offset + len(awards)
+                })
+                
                 # If no recent awards in this batch, check if we've gone too far back
                 if not recent_awards:
                     # Check if all awards in batch are older than threshold
                     latest_in_batch = max([a.get('proposal_award_date', '') for a in awards if a.get('proposal_award_date')])
                     if latest_in_batch < threshold_str:
-                        self.logger.info(f"Reached awards older than {threshold_str}, stopping search")
+                        pbar.write(f"Reached awards older than {threshold_str}, stopping search")
                         break
                 
                 offset += len(awards)
-                self.logger.debug(f"Processed {offset} total awards, found {len(all_recent_awards)} recent")
                 
                 # Rate limiting
                 time.sleep(API_DELAY)
                 
                 # Safety limit
                 if offset >= 10000:  # Don't search more than 10k records
-                    self.logger.warning("Reached safety limit of 10,000 records searched")
+                    pbar.write("Reached safety limit of 10,000 records searched")
                     break
                 
             except requests.exceptions.RequestException as e:
-                self.logger.error(f"Request failed while fetching recent awards: {e}")
+                pbar.write(f"Request failed while fetching recent awards: {e}")
                 break
             
             except Exception as e:
-                self.logger.error(f"Unexpected error while fetching recent awards: {e}")
+                pbar.write(f"Unexpected error while fetching recent awards: {e}")
                 break
         
+        pbar.close()
         self.logger.info(f"Found {len(all_recent_awards)} awards from last {days_back} days")
         return all_recent_awards
     
