@@ -77,6 +77,9 @@ config/secrets.py
 # Internal planning documents
 ScraperPRD.md
 CLAUDE.md
+SBIR_API_REFERENCE.md
+PALANTIR_FOUNDRY_MIGRATION.md
+PROJECT_COMPLETION_SUMMARY.md
 
 # Test outputs
 .pytest_cache/
